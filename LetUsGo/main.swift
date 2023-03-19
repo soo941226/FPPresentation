@@ -9,11 +9,11 @@ import Foundation
 import Combine
 
 // MARK: - Compose ~
-let square = { (number: Int) in
+let square = { (number: Int) -> Int in
     return number * number
 }
 
-let double = { (number: Int) in
+let double = { (number: Int) -> Int in
     return 2 * number
 }
 
@@ -33,12 +33,12 @@ func add(_ first: Int) -> ((Int) -> Int) {
 
 add(3)(5)
 
-func curry<LeftInput, RightInput, Output>(
-    _ action: @escaping (LeftInput, RightInput) -> Output
-) -> ((LeftInput) -> ((RightInput) -> Output)) {
-    return { (_ left: LeftInput) -> ((RightInput) -> Output) in
-        return { (right: RightInput) -> Output in
-            return action(left, right)
+func curry<First, Last, Output>(
+    _ action: @escaping (First, Last) -> Output
+) -> ((First) -> ((Last) -> Output)) {
+    return { (_ first: First) -> ((Last) -> Output) in
+        return { (last: Last) -> Output in
+            return action(first, last)
         }
     }
 }
@@ -75,7 +75,7 @@ let dummyData = [
 {
     "name":"떡만두국",
     "price":8000,
-    "description":"식후땡"
+    "description":"만두 만두만두 만두"
 }
 """,
 """
