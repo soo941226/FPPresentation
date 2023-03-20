@@ -53,6 +53,10 @@ func minus(_ lhs: Int, _ rhs: Int) -> Int {
 
 print(curry(plus)(0)(10)) //10
 print(curry(minus)(0)(10)) //-10
+print(curry(+)(0)(10)) //10
+print(curry(-)(0)(10)) //-10
+print(curry(*)(0)(10)) //0
+print(curry(/)(0)(10)) //0
 // MARK: ~ Currying
 
 
@@ -101,6 +105,12 @@ let dummyData = [
 """
 ]
 
+let timer = Timer.publish(every: 1, on: .current, in: .common)
+    .autoconnect()
+    .sink { eachTime in
+        input.send(dummyData[.random(in: .zero..<dummyData.count)].data(using: .utf8)!)
+    }
+
 let input = PassthroughSubject<Data, Error>()
 
 let output = input
@@ -113,11 +123,6 @@ let output = input
         print(result)
     }
 
-let timer = Timer.publish(every: 1, on: .current, in: .common)
-    .autoconnect()
-    .sink { eachTime in
-        input.send(dummyData[.random(in: .zero..<dummyData.count)].data(using: .utf8)!)
-    }
 
 // MARK: ~ Combine
 
